@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:realcallerapp/blocs/permissionbloc/permissonbloc_bloc.dart';
@@ -42,17 +43,83 @@ class _HomeState extends State<Home> {
           child: ListView(
             children: [
               DrawerHeader(
-                child: Text(
-                  'Side menu',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 32,
+                      backgroundImage: NetworkImage(
+                        "https://wallpaperaccess.com/full/2213424.jpg",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Alex Brooker",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "+973 439 2343 434",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff707070),
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ],
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: CachedNetworkImageProvider(
-                            'https://wallpaperaccess.com/full/2213424.jpg'))),
-              )
+              ),
+              ListTile(
+                title: Text(
+                  "Upgrade To Premium",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.remove_red_eye_outlined),
+                title: Text("Who viewed my profile"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.notifications),
+                title: Text("Notification"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.share),
+                title: Text("Invite Friend"),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text(
+                  "Dark mode",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                trailing: CupertinoSwitch(
+                    activeColor: Color(0xff0d0d0d),
+                    value: true,
+                    onChanged: (value) {}),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text(
+                  "FAQ",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                onTap: () {},
+              ),
             ],
           ),
         ),
