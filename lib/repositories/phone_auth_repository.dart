@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:realcallerapp/blocs/bloc/auth_bloc.dart';
+import 'package:realcallerapp/blocs/authbloc/auth_bloc.dart';
 import 'package:realcallerapp/models/basicuser.dart';
 import 'dart:async';
 

@@ -86,9 +86,4 @@ List<CallLog> callLogData = <CallLog>[
       logType: "Outgoing Call")
 ];
 
-List<List<CallLog>> navCallLogList = [
-  callLogData,
-  callLogData,
-  callLogData,
-  callLogData
-];
+List<List<CallLog>> navCallLogList = [callLogData, [], [], []];

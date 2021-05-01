@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:realcallerapp/models/call_log.dart';
+import 'package:realcallerapp/src/screens/home_tab_screens.dart/all_call_log_screen.dart';
+import 'package:realcallerapp/src/screens/home_tab_screens.dart/business_call_log_screen.dart';
+import 'package:realcallerapp/src/screens/home_tab_screens.dart/spam_call_log_screen.dart';
+import 'package:realcallerapp/src/screens/home_tab_screens.dart/starred_call_log_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -105,56 +109,14 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         Expanded(
             child: TabBarView(
-          physics: BouncingScrollPhysics(),
-          controller: _homeNavigationTabController,
-          children: navCallLogList.map((item) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ListView.builder(
-                  itemCount: item.length,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 24,
-                                  backgroundImage:
-                                      NetworkImage(item[index].profileImageUrl),
-                                ),
-                                SizedBox(
-                                  width: 14,
-                                ),
-                                Column(
-                                  children: [
-                                    Text(item[index].username),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(item[index].logType)
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.phone,
-                              size: 24,
-                              color: Color(0xffa1a1a1),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            );
-          }).toList(),
-        )),
+                physics: BouncingScrollPhysics(),
+                controller: _homeNavigationTabController,
+                children: [
+              AllCallLogScreen(),
+              StarredCallLog(),
+              BusinessCallLog(),
+              SpamCallLog()
+            ])),
       ],
     );
   }
