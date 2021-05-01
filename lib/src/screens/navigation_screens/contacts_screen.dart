@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:realcallerapp/models/message.dart';
+import 'package:realcallerapp/src/screens/user_profile_screen.dart';
 
 class ContactsScreen extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             child: Row(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Scaffold.of(context).openDrawer(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14),
                     child: Icon(
@@ -73,48 +74,54 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 24,
-                              backgroundImage: NetworkImage(
-                                  messageData[index].profileImageUrl),
-                            ),
-                            SizedBox(
-                              width: 14,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  messageData[index].username,
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.phone,
-                              color: Color(0xff00ca78),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Icon(
-                              Icons.message,
-                              color: Color(0xff00ca78),
-                            )
-                          ],
-                        )
-                      ],
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return UserProfileScreen();
+                    })),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundImage: NetworkImage(
+                                    messageData[index].profileImageUrl),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    messageData[index].username,
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                color: Color(0xff00ca78),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(
+                                Icons.message,
+                                color: Color(0xff00ca78),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

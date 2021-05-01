@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:realcallerapp/models/message.dart';
+import 'package:realcallerapp/src/screens/message_screens/message_room_screen.dart';
 
 class MessageScreen extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _MessageScreenState extends State<MessageScreen> {
             child: Row(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Scaffold.of(context).openDrawer(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14),
                     child: Icon(
@@ -73,35 +74,41 @@ class _MessageScreenState extends State<MessageScreen> {
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 24,
-                              backgroundImage: NetworkImage(
-                                  messageData[index].profileImageUrl),
-                            ),
-                            SizedBox(
-                              width: 14,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(messageData[index].username),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(messageData[index].recentMessage)
-                              ],
-                            ),
-                          ],
-                        ),
-                        Text(messageData[index].dateTime)
-                      ],
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return MessageRoomScreen();
+                    })),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundImage: NetworkImage(
+                                    messageData[index].profileImageUrl),
+                              ),
+                              SizedBox(
+                                width: 14,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(messageData[index].username),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(messageData[index].recentMessage)
+                                ],
+                              ),
+                            ],
+                          ),
+                          Text(messageData[index].dateTime)
+                        ],
+                      ),
                     ),
                   ),
                 );

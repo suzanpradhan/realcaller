@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:realcallerapp/models/call_log.dart';
+import 'package:realcallerapp/src/screens/user_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -44,16 +45,13 @@ class _HomeScreenState extends State<HomeScreen>
             child: Row(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Scaffold.of(context).openDrawer(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14),
-                    child: InkWell(
-                      onTap: () => Scaffold.of(context).openDrawer(),
-                      child: Icon(
-                        Icons.menu,
-                        size: 20,
-                        color: Color(0xff0d0d0d),
-                      ),
+                    child: Icon(
+                      Icons.menu,
+                      size: 20,
+                      color: Color(0xff0d0d0d),
                     ),
                   ),
                 ),
@@ -116,38 +114,44 @@ class _HomeScreenState extends State<HomeScreen>
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 24,
-                                  backgroundImage:
-                                      NetworkImage(item[index].profileImageUrl),
-                                ),
-                                SizedBox(
-                                  width: 14,
-                                ),
-                                Column(
-                                  children: [
-                                    Text(item[index].username),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(item[index].logType)
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.phone,
-                              size: 24,
-                              color: Color(0xffa1a1a1),
-                            )
-                          ],
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return UserProfileScreen();
+                        })),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 24,
+                                    backgroundImage: NetworkImage(
+                                        item[index].profileImageUrl),
+                                  ),
+                                  SizedBox(
+                                    width: 14,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(item[index].username),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(item[index].logType)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Icon(
+                                Icons.phone,
+                                size: 24,
+                                color: Color(0xffa1a1a1),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );

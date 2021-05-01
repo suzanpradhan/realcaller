@@ -12,6 +12,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Column(
       children: [
         AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Color(0xfffafafa),
           elevation: 0,
           title: Text(
@@ -24,6 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         Expanded(
             child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: settingData.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
