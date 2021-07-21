@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:realcallerapp/models/ads_model.dart';
 import 'package:realcallerapp/models/basicuser.dart';
 
 class FirestoreRepo {
@@ -177,6 +178,62 @@ class FirestoreRepo {
       }
     } catch (e) {
       return Future.error("Failed to connect to server.");
+    }
+  }
+
+  addListOfAds(
+      {required String userId, required List<AdsModel> listOfAdsModel}) async {
+    try {
+      CollectionReference _adsCollection =
+          _firestoreInstance.collection("users").doc(userId).collection("ads");
+      for (AdsModel adModel in listOfAdsModel) {
+        _adsCollection
+            .doc(adModel.id)
+            .set(adModel.toMapForDb())
+            .then((value) => print("Ad Model Added!"))
+            .catchError((error) => print("Error: " + error.toString()));
+      }
+    } catch (e) {
+      return Future.error("Ads Add Failed");
+    }
+  }
+
+  Future<List<AdsModel>> getUserAds({required String userId}) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> _adsCollection =
+          await _firestoreInstance
+              .collection("users")
+              .doc(userId)
+              .collection("ads")
+              .get();
+
+      List<AdsModel> adsList = _adsCollection.docs
+          .map((data) => AdsModel.fromDbtoModel(data, data.id))
+          .toList();
+      if (adsList.isEmpty) {
+        return Future.error("No User Found.");
+      } else {
+        return adsList;
+      }
+    } catch (e) {
+      return Future.error("Can't load user.");
+    }
+  }
+
+  Future<bool> updateUserAds(
+      {required String userID, required AdsModel adsModel}) async {
+    try {
+      bool isUpdated = false;
+      await _firestoreInstance
+          .collection("users")
+          .doc(userID)
+          .collection("ads")
+          .doc(adsModel.id)
+          .update(adsModel.toMapForDb())
+          .whenComplete(() => isUpdated = true);
+      return isUpdated;
+    } catch (e) {
+      return Future.error("User Ad Update Failed.");
     }
   }
 }
