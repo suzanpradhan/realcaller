@@ -26,7 +26,7 @@ class SettingsRepo {
     var box = await Hive.openBox('settings');
     try {
       box.putAt(0, settingsModel);
-      return settingsModel;
+      return box.getAt(0) as SettingsModel;
     } catch (e) {
       return Future.error("Settings Update Failed.");
     }

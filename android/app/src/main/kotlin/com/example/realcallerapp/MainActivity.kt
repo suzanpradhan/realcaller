@@ -123,17 +123,17 @@ class MainActivity : FlutterActivity() {
 
     }
 
-    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager: ActivityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == service.service.getClassName()) {
-                Log.i("isMyServiceRunning?", true.toString() + "")
-                return true
-            }
-        }
-        Log.i("isMyServiceRunning?", false.toString() + "")
-        return false
-    }
+//    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+//        val manager: ActivityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+//        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+//            if (serviceClass.name == service.service.getClassName()) {
+//                Log.i("isMyServiceRunning?", true.toString() + "")
+//                return true
+//            }
+//        }
+//        Log.i("isMyServiceRunning?", false.toString() + "")
+//        return false
+//    }
 
     private fun checkDefaultDialer() {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -201,10 +201,10 @@ class MainActivity : FlutterActivity() {
         Log.d("on destroy called", "gps state on destroy called first");
         Log.d("on destroy called", "gps state on destroy called second");
 
-       val broadcastIntent = Intent()
-       broadcastIntent.action = "restartservice"
-       broadcastIntent.setClass(this, RestartService::class.java)
-       this.sendBroadcast(broadcastIntent)
+//       val broadcastIntent = Intent()
+//       broadcastIntent.action = "restartservice"
+//       broadcastIntent.setClass(this, RestartService::class.java)
+//       this.sendBroadcast(broadcastIntent)
         super.onDestroy()
     }
 

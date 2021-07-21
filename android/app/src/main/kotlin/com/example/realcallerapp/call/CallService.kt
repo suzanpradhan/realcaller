@@ -2,12 +2,14 @@ package com.example.realcallerapp.call
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.*
 import android.telecom.Call
 import android.telecom.InCallService
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.example.realcallerapp.R
 import io.flutter.Log
 import java.util.*
@@ -16,10 +18,7 @@ import java.util.*
 class CallService : InCallService() {
     var counter = 0
 
-    override fun onBind(intent: Intent?): IBinder? {
-//        return super.onBind(intent)
-        return null
-    }
+
     override fun onCreate() {
         super.onCreate()
 //        val broadcastIntent = Intent()
@@ -71,16 +70,19 @@ class CallService : InCallService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        val broadcast = Intent(this, RestartService::class.java)
+
+        sendBroadcast(broadcast)
 
 //        val broadcast = Intent(this, PhoneStateReceiver::class.java)
 //
 //        sendBroadcast(broadcast)
-        stoptimertask()
+//        stoptimertask()
 
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, RestartService::class.java)
-        this.sendBroadcast(broadcastIntent)
+//        val broadcastIntent = Intent()
+//        broadcastIntent.action = "restartservice"
+//        broadcastIntent.setClass(this, RestartService::class.java)
+//        this.sendBroadcast(broadcastIntent)
     }
 
 
@@ -98,7 +100,7 @@ class CallService : InCallService() {
 //                .setContentIntent(pendingIntent)
 //                .build()
 //        startForeground(1, notification)
-        startTimer();
+//        startTimer();
         return START_STICKY;
     }
 
@@ -122,15 +124,18 @@ class CallService : InCallService() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
-        stoptimertask()
+//        stoptimertask()
+        val broadcast = Intent(this, RestartService::class.java)
+
+        sendBroadcast(broadcast)
 //        val broadcast = Intent(this, PhoneStateReceiver::class.java)
 //
 //        sendBroadcast(broadcast)
 
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, RestartService::class.java)
-        this.sendBroadcast(broadcastIntent)
+//        val broadcastIntent = Intent()
+//        broadcastIntent.action = "restartservice"
+//        broadcastIntent.setClass(this, RestartService::class.java)
+//        this.sendBroadcast(broadcastIntent)
 //        val restartServiceIntent = Intent(applicationContext, this.javaClass)
 //        val restartServicePendingIntent = PendingIntent.getService(
 //                applicationContext, 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT)
@@ -144,6 +149,28 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
          Toast.makeText(this, "Call Added", Toast.LENGTH_SHORT).show()
         // val broadcast = Intent(this, PhoneStateReceiver::class.java)
+// request code and flags not added for demo purposes
+        val destination = CallActivity::class.java
+        val intent = Intent(this, destination)
+
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
+//            val notifChannel = NotificationChannel(
+//                    "notifChannel",
+//                    "Example Service Channel",
+//                    NotificationManager.IMPORTANCE_HIGH
+//            )
+//            val manager: NotificationManager = getSystemService(NotificationManager::class.java)
+//            manager.createNotificationChannel(notifChannel)
+//            val builder = NotificationCompat.Builder(this, "notifChannel")
+//                    .setSmallIcon(android.R.drawable.arrow_up_float)
+//                    .setContentTitle("Title")
+//                    .setContentText("Description")
+//                    .setDefaults(Notification.DEFAULT_ALL)
+//            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT, )
+//            builder.setContentIntent(pendingIntent);
+//            builder.setFullScreenIntent(pendingIntent, true)
+//            manager.notify(115, builder.build());
+//        }
 
         // sendBroadcast(broadcast)
        OngoingCall.call = call
@@ -152,9 +179,6 @@ class CallService : InCallService() {
 
     override fun onCallRemoved(call: Call) {
          Toast.makeText(this, "Call Removed", Toast.LENGTH_SHORT).show()
-        // val broadcast = Intent(this, PhoneStateReceiver::class.java)
-
-        // sendBroadcast(broadcast)
        OngoingCall.call = null
     }
 }

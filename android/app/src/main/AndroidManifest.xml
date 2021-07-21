@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.realcallerapp">
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -21,6 +22,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
     <uses-permission android:name="oppo.permission.OPPO_COMPONENT_SAFE"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="com.huawei.permission.external_app_settings.USE_COMPONENT"/>
 
 
@@ -101,20 +103,24 @@
             </intent-filter>
         </activity>
 
-       <receiver android:name="com.example.realcallerapp.call.PhoneStateReceiver">
-           <intent-filter>
-               <action android:name="android.intent.action.PHONE_STATE" />
-           </intent-filter>
-       </receiver>
+<!--       <receiver android:name="com.example.realcallerapp.call.PhoneStateReceiver">-->
+<!--           <intent-filter>-->
+<!--               <action android:name="android.intent.action.PHONE_STATE" />-->
+<!--           </intent-filter>-->
+<!--       </receiver>-->
 
        <receiver
            android:name="com.example.realcallerapp.call.RestartService"
            android:enabled="true"
-           android:exported="true">
+           android:exported="true"
+           android:permission="TODO"
+           tools:ignore="ExportedReceiver">
            <intent-filter>
                <action android:name="restartservice" />
            </intent-filter>
        </receiver>
+
+       <activity android:name="com.example.realcallerapp.call.CallActivity" android:showOnLockScreen="true"/>
             <service
             android:name="com.example.realcallerapp.call.CallService"
             android:permission="android.permission.BIND_INCALL_SERVICE"
@@ -134,7 +140,7 @@
            android:enabled="true">
        </service> -->
 
-        <activity android:name="com.example.realcallerapp.call.CallActivity"/>
+
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

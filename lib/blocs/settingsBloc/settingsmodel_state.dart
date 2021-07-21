@@ -28,19 +28,3 @@ class SettingsDetailFailed extends SettingsmodelState {
 }
 
 class UpdateSettingsLoading extends SettingsmodelState {}
-
-class UpdateSettingsSuccess extends SettingsmodelState {
-  final SettingsModel settingsModel;
-  UpdateSettingsSuccess({required this.settingsModel});
-
-  @override
-  List<Object> get props => [settingsModel];
-}
-
-class UpdateSettingFailed extends SettingsmodelState {
-  final String message;
-  UpdateSettingFailed({required this.message});
-
-  @override
-  List<Object> get props => [message];
-}
