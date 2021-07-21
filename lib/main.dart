@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:logger_flutter/logger_flutter.dart';
 import 'package:realcallerapp/blocs/appThemeChanger/appthemechanger_bloc.dart';
+import 'package:realcallerapp/models/hive_models/settings_model.dart';
 import 'package:realcallerapp/src/screens/splash_screen.dart';
 import 'package:realcallerapp/utils/app_theme.dart';
 import 'package:realcallerapp/utils/constants/locales.dart';
@@ -19,6 +20,7 @@ void main() async {
   // const Call_Method = "makeCall";
   const platform = const MethodChannel(CHANNEL);
   Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(SettingsModelAdapter());
   await Firebase.initializeApp();
 
   runApp(MyApp());
