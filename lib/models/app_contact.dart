@@ -1,6 +1,6 @@
-class AppContact {
+class AppContact2 {
   String name;
   int phoneNumber;
 
-  AppContact({this.name = "", required this.phoneNumber});
+  AppContact2({this.name = "", required this.phoneNumber});
 }
