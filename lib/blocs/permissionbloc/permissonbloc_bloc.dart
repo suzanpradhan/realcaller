@@ -17,7 +17,7 @@ class PermissonblocBloc extends Bloc<PermissonblocEvent, PermissonblocState> {
     PermissonblocEvent event,
   ) async* {
     if (event is RequestAllPermission) {
-      await appPermission.getAllPermissionsRequests();
+    } else if (event is AllPermissionGrantedEvent) {
       yield RequestAllPermissionLoaded();
     }
   }

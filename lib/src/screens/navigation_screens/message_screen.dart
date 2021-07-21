@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:realcallerapp/models/message.dart';
+import 'package:realcallerapp/models/smsListing.dart';
+import 'package:realcallerapp/repositories/sms_repo.dart';
 import 'package:realcallerapp/src/screens/message_screens/message_room_screen.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -10,6 +11,10 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
+    return buildColumn(context);
+  }
+
+  Column buildColumn(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,14 +23,9 @@ class _MessageScreenState extends State<MessageScreen> {
           child: Container(
             height: 50,
             decoration: BoxDecoration(
-                color: Color(0xfffafafa),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color(0xfff1f1f1),
-                      offset: Offset(0, 3),
-                      blurRadius: 2)
-                ]),
+              color: Theme.of(context).appBarTheme.backgroundColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Row(
               children: [
                 InkWell(
@@ -35,7 +35,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     child: Icon(
                       Icons.menu,
                       size: 20,
-                      color: Color(0xff0d0d0d),
+                      color: IconTheme.of(context).color,
                     ),
                   ),
                 ),
@@ -45,8 +45,13 @@ class _MessageScreenState extends State<MessageScreen> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "Search"),
-                    style: TextStyle(fontSize: 16, color: Color(0xff0d0d0d)),
+                        border: InputBorder.none,
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).textTheme.caption!.color)),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.bodyText1!.color),
                   ),
                 ),
                 SizedBox(
@@ -58,7 +63,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     child: Icon(
                       Icons.more_vert,
                       size: 20,
-                      color: Color(0xff0d0d0d),
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                 )
@@ -67,53 +72,116 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-              itemCount: messageData.length,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: InkWell(
-                    onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return MessageRoomScreen();
-                    })),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 24,
-                                backgroundImage: NetworkImage(
-                                    messageData[index].profileImageUrl),
+            child: FutureBuilder(
+                future: SmsRepo().getAllMessages(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<SmsListing>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: InkWell(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                return MessageRoomScreen(
+                                  smsListing: snapshot.data![index],
+                                );
+                              })),
+                              child: Container(
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 28,
+                                            backgroundImage: snapshot
+                                                .data![index].userProfileImage,
+                                          ),
+                                          SizedBox(
+                                            width: 14,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  snapshot.data![index].name!,
+                                                  style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1!
+                                                          .color,
+                                                      fontFamily: "GilroyLight",
+                                                      fontSize: 16),
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  snapshot.data![index]
+                                                      .recentMessage!,
+                                                  style: TextStyle(
+                                                      fontFamily: "GilroyLight",
+                                                      fontSize: 14,
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .color),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 14,
+                                    ),
+                                    Text(
+                                      snapshot.data![index].recentMessageTime!,
+                                      style: TextStyle(
+                                          fontFamily: "GilroyLight",
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .color,
+                                          fontSize: 14),
+                                    )
+                                  ],
+                                ),
                               ),
-                              SizedBox(
-                                width: 14,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(messageData[index].username),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(messageData[index].recentMessage)
-                                ],
-                              ),
-                            ],
-                          ),
-                          Text(messageData[index].dateTime)
-                        ],
+                            ),
+                          );
+                        });
+                  } else {
+                    return Center(
+                      child: Container(
+                        child: Text(
+                          "No Messages.",
+                          style: TextStyle(
+                              fontFamily: "GilroyLight",
+                              fontSize: 16,
+                              color:
+                                  Theme.of(context).textTheme.caption!.color),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              }),
-        )
+                    );
+                  }
+                }))
       ],
     );
   }

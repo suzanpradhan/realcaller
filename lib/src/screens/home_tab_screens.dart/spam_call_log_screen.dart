@@ -10,7 +10,12 @@ class _SpamCallLogState extends State<SpamCallLog> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Text("No Spam Call logs."),
+        child: Text(
+          "No Spam Call logs.",
+          style: TextStyle(
+              fontFamily: "GilroyLight",
+              color: Theme.of(context).textTheme.bodyText1!.color),
+        ),
       ),
     );
   }

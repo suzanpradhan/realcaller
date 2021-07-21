@@ -5,4 +5,6 @@ extension StringExtension on String {
 
   String getInitials() =>
       this.trim().split(' ').map((l) => l[0]).take(2).join();
+
+  String removeLast() => this.substring(0, this.length - 1);
 }

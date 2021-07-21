@@ -25,7 +25,8 @@ class ContactblocBloc extends Bloc<ContactblocEvent, ContactblocState> {
           yield ContactsLoaded(contacts: contacts);
         }
       } catch (e) {
-        yield ContactsLoadFailed(errorMessage: e.toString());
+        yield NoContacts(message: "No Contacts Found.");
+        // yield ContactsLoadFailed(errorMessage: e.toString());
       }
     }
   }
