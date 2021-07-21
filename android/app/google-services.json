@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "200630194596",
+    "project_id": "realcaller-7a59d",
+    "storage_bucket": "realcaller-7a59d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200630194596:android:b26e0d7a6771c7499a7131",
+        "android_client_info": {
+          "package_name": "com.example.realcallerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200630194596-63g8im556j0mnhsosiplragsqqce7rp7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.realcallerapp",
+            "certificate_hash": "e930a587a5b3b893cefe97d28607c5173c3ff758"
+          }
+        },
+        {
+          "client_id": "200630194596-0ui32i62cmag727lovp6r26ss8fs1loc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuFMp9to_bT7uJOJkT6YO3AtYAhR6lwn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200630194596-0ui32i62cmag727lovp6r26ss8fs1loc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
