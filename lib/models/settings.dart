@@ -9,6 +9,7 @@ class Settings {
 }
 
 List<Settings> settingData = <Settings>[
+  Settings(settingTitle: "Earn RealCoins", settingIcon: Icons.monetization_on),
   Settings(settingTitle: "General", settingIcon: (EvaIcons.settings2)),
   Settings(settingIcon: (EvaIcons.shield), settingTitle: "Spam"),
   Settings(settingIcon: (EvaIcons.eye), settingTitle: "Appearance"),

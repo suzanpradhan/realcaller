@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:realcallerapp/models/settings.dart';
 import 'package:realcallerapp/src/screens/settings_screens/about_us_screen.dart';
+import 'package:realcallerapp/src/screens/settings_screens/earning_screen.dart';
 import 'package:realcallerapp/src/screens/settings_screens/general_settings_screen.dart';
 import 'package:realcallerapp/src/screens/settings_screens/privacy_policy_screen.dart';
 import 'package:realcallerapp/src/screens/settings_screens/spam_settings_screen.dart';
@@ -13,6 +14,10 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   List<Function> settingsFunction = [
+    (context) {
+      Navigator.of(context).push(CupertinoPageRoute(
+          builder: (BuildContext context) => EarningScreen()));
+    },
     (context) {
       Navigator.of(context).push(CupertinoPageRoute(
           builder: (BuildContext context) => GeneralSettingsScreen()));
