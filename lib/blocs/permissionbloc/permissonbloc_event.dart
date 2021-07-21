@@ -8,3 +8,5 @@ abstract class PermissonblocEvent extends Equatable {
 }
 
 class RequestAllPermission extends PermissonblocEvent {}
+
+class AllPermissionGrantedEvent extends PermissonblocEvent {}

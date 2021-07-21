@@ -10,7 +10,12 @@ class _BusinessCallLogState extends State<BusinessCallLog> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Text("No Business Logs."),
+        child: Text(
+          "No Business Logs.",
+          style: TextStyle(
+              fontFamily: "GilroyLight",
+              color: Theme.of(context).textTheme.bodyText1!.color),
+        ),
       ),
     );
   }

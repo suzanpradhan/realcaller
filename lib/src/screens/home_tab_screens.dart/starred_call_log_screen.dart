@@ -10,7 +10,12 @@ class _StarredCallLogState extends State<StarredCallLog> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Text("No Call logs."),
+        child: Text(
+          "No Call logs.",
+          style: TextStyle(
+              fontFamily: "GilroyLight",
+              color: Theme.of(context).textTheme.bodyText1!.color),
+        ),
       ),
     );
   }

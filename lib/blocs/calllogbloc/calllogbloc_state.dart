@@ -12,7 +12,7 @@ class CalllogblocInitial extends CalllogblocState {}
 class AllCallLogLoading extends CalllogblocState {}
 
 class AllCallLogLoaded extends CalllogblocState {
-  final List<CallLogEntry> allCallLogs;
+  final List<Future<CallLogUIModel>> allCallLogs;
 
   AllCallLogLoaded({required this.allCallLogs});
   List<Object> get props => [allCallLogs];

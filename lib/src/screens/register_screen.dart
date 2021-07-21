@@ -10,25 +10,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Sign Up",
-          style: TextStyle(color: Color(0xff0d0d0d)),
-        ),
-        leading: InkWell(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Color(0xff0d0d0d),
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfffafafa),
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     "Sign Up",
+      //     style: TextStyle(color: Color(0xff0d0d0d)),
+      //   ),
+      //   leading: InkWell(
+      //     onTap: () {
+      //       Navigator.of(context).pop();
+      //     },
+      //     child: Icon(
+      //       Icons.arrow_back_ios,
+      //       size: 20,
+      //       color: Color(0xff0d0d0d),
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: Color(0xfffafafa),
+      //   elevation: 0,
+      // ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(

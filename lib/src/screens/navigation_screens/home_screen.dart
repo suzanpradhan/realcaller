@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:realcallerapp/models/call_log.dart';
 import 'package:realcallerapp/src/screens/home_tab_screens.dart/all_call_log_screen.dart';
 import 'package:realcallerapp/src/screens/home_tab_screens.dart/business_call_log_screen.dart';
 import 'package:realcallerapp/src/screens/home_tab_screens.dart/spam_call_log_screen.dart';
 import 'package:realcallerapp/src/screens/home_tab_screens.dart/starred_call_log_screen.dart';
+import 'package:realcallerapp/utils/constants/custom_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _homeNavigationTabController = TabController(length: 4, vsync: this);
   }
@@ -37,14 +36,9 @@ class _HomeScreenState extends State<HomeScreen>
           child: Container(
             height: 50,
             decoration: BoxDecoration(
-                color: Color(0xfffafafa),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color(0xfff1f1f1),
-                      offset: Offset(0, 3),
-                      blurRadius: 5)
-                ]),
+              color: Theme.of(context).appBarTheme.backgroundColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: Row(
               children: [
                 InkWell(
@@ -56,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Icon(
                         Icons.menu,
                         size: 20,
-                        color: Color(0xff0d0d0d),
+                        color: IconTheme.of(context).color,
                       ),
                     ),
                   ),
@@ -67,8 +61,13 @@ class _HomeScreenState extends State<HomeScreen>
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "Search"),
-                    style: TextStyle(fontSize: 16, color: Color(0xff0d0d0d)),
+                        border: InputBorder.none,
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                            color: Theme.of(context).textTheme.caption!.color)),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.bodyText1!.color),
                   ),
                 ),
                 SizedBox(
@@ -80,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen>
                     child: Icon(
                       Icons.more_vert,
                       size: 20,
-                      color: Color(0xff0d0d0d),
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                 )
@@ -89,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
           child: TabBar(
               controller: _homeNavigationTabController,
               labelColor: Colors.white,
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen>
               unselectedLabelColor: Color(0xffbfbfbf),
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Color(0xff00ca78)),
+                  color: CustomColors.purpleLightFaded),
               // indicatorSize: TabBarIndicatorSize.label,
               physics: BouncingScrollPhysics(),
               automaticIndicatorColorAdjustment: true,

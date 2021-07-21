@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class Settings {
@@ -8,11 +9,11 @@ class Settings {
 }
 
 List<Settings> settingData = <Settings>[
-  Settings(settingTitle: "General", settingIcon: (Icons.settings)),
-  Settings(settingIcon: (Icons.shield), settingTitle: "BlockList"),
-  Settings(settingIcon: (Icons.ac_unit), settingTitle: "Appearance"),
-  Settings(settingIcon: (Icons.ac_unit), settingTitle: "Caller Id"),
-  Settings(settingIcon: (Icons.lock), settingTitle: "Privacy Policy"),
-  Settings(settingIcon: (Icons.info), settingTitle: "About"),
-  Settings(settingIcon: (Icons.logout), settingTitle: "LogOut")
+  Settings(settingTitle: "General", settingIcon: (EvaIcons.settings2)),
+  Settings(settingIcon: (EvaIcons.shield), settingTitle: "Spam"),
+  Settings(settingIcon: (EvaIcons.eye), settingTitle: "Appearance"),
+  Settings(settingIcon: (EvaIcons.phone), settingTitle: "Caller Id"),
+  Settings(settingIcon: (EvaIcons.lock), settingTitle: "Privacy Policy"),
+  Settings(settingIcon: (EvaIcons.info), settingTitle: "About"),
+  Settings(settingIcon: (EvaIcons.logOut), settingTitle: "LogOut")
 ];
