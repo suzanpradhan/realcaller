@@ -92,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               if (state is SettingsDetailSuccess) {
                                 settingsFunction[index](
                                     context,
-                                    (index != 4)
+                                    (index == 3)
                                         ? BlocProvider.of<AppthemechangerBloc>(
                                             context)
                                         : BlocProvider.of<SettingsmodelBloc>(

@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:realcallerapp/models/ads_model.dart';
 import 'package:realcallerapp/models/basicuser.dart';
+import 'package:realcallerapp/models/default_ads_model.dart';
+import 'package:realcallerapp/models/spam_model.dart';
 
 class FirestoreRepo {
   FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
@@ -181,6 +185,29 @@ class FirestoreRepo {
     }
   }
 
+  addDefaultsAdsIntoUser({required String userId}) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> _adsCollection =
+          await _firestoreInstance.collection("adsDefaults").get();
+
+      List<DefaultAdsModel> adsList = _adsCollection.docs
+          .map((data) => DefaultAdsModel.fromDbtoModel(data))
+          .toList();
+      if (adsList.isEmpty) {
+        return Future.error("No Ads Found.");
+      } else {
+        List<AdsModel> userAdsModel = adsList
+            .map((data) => AdsModel(
+                status: false,
+                dateTime: FieldValue.serverTimestamp().toString()))
+            .toList();
+        addListOfAds(listOfAdsModel: userAdsModel, userId: userId);
+      }
+    } catch (e) {
+      return Future.error("Can't load ads.");
+    }
+  }
+
   addListOfAds(
       {required String userId, required List<AdsModel> listOfAdsModel}) async {
     try {
@@ -206,6 +233,9 @@ class FirestoreRepo {
               .doc(userId)
               .collection("ads")
               .get();
+      if (_adsCollection.docs.isEmpty) {
+        addDefaultsAdsIntoUser(userId: userId);
+      }
 
       List<AdsModel> adsList = _adsCollection.docs
           .map((data) => AdsModel.fromDbtoModel(data, data.id))
@@ -234,6 +264,72 @@ class FirestoreRepo {
       return isUpdated;
     } catch (e) {
       return Future.error("User Ad Update Failed.");
+    }
+  }
+
+  reportContact({required String userID, required String phoneNumber}) async {
+    try {} catch (e) {}
+  }
+
+  Future<SpamModel?> checkContactAsSpam({required String phoneNumber}) async {
+    try {
+      print(phoneNumber);
+      QuerySnapshot<Map<String, dynamic>> queryContacts =
+          await _firestoreInstance
+              .collection("spams")
+              .where("phone", isEqualTo: phoneNumber)
+              .get();
+      if (queryContacts.docs.length != 0) {
+        print("matched");
+        SpamModel spamModel = queryContacts.docs
+            .map((contact) => SpamModel.fromDbtoModel(contact, contact.id))
+            .toList()
+            .first;
+        print(spamModel.docID);
+        return spamModel;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<SpamModel>> getAllUserSpams(
+      {required Iterable<Contact> listOfContacts}) async {
+    try {
+      List<SpamModel> newList = [];
+      for (var contact in listOfContacts.toList()) {
+        try {
+          if (contact.phones != null) {
+            QuerySnapshot<Map<String, dynamic>> queryContacts =
+                await _firestoreInstance
+                    .collection("spams")
+                    .where("phone",
+                        isEqualTo: contact.phones!.first.value!
+                            .toString()
+                            .replaceAll("-", "")
+                            .replaceAll("+", ""))
+                    .get();
+
+            if (queryContacts.docs.isNotEmpty) {
+              print("matched");
+              SpamModel spamModel = queryContacts.docs
+                  .map(
+                      (contact) => SpamModel.fromDbtoModel(contact, contact.id))
+                  .toList()
+                  .first;
+              print(spamModel.docID);
+              newList.add(spamModel);
+              print(newList);
+            }
+          }
+        } catch (e) {}
+      }
+      print(newList);
+      return newList;
+    } catch (e) {
+      return Future.error("Spams Load Failed");
     }
   }
 }
